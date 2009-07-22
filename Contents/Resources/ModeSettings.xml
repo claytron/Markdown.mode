@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <template>Markdown_CheatSheet.md</template>
+  <recognition>
+    <extension>md</extension>
+    <extension>mdown</extension>
+    <extension>markdown</extension>
+  </recognition>
+</settings>

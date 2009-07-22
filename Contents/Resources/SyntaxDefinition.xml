@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syntax>
+  <head>
+    <!-- 
+        The <name> specifies the modes name. 
+        This tag is required and must match with the name in the plist after the SEEMode..
+        -->
+    <name>Markdown Syntax</name>
+    <!-- optional to add spelling-dicitionary autocomplete words -->
+    <autocompleteoptions use-spelling-dictionary="yes"/>
+    <!-- 
+        The <charsintokens> and the <charsdelimitingtokens> instruct the syntax highlighter
+        where to tokenize the text for fast finding of plain strings.
+        The <charsintokens> tag specifies the characters that can occur in strings,
+        the <charsdelimitingtokens> tag specifies the tags that cannot occur in strings.
+        One of these tags has to be specified.
+        Tip: Use CDATA here.
+        -->
+    <charsintokens><![CDATA[_0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@]]></charsintokens>
+    <!-- <charsdelimitingtokens><![CDATA[ -]]></charsdelimitingtokens> -->
+    <!--
+          the <charsincompletion> defines characters used for autocompletion. e.g. in perl
+          you want this to include the $ sign to autocomplete variables.
+          If left out the regular expression word boundaries are used.
+        -->
+    <!-- <charsincompletion><![CDATA[_0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-@$</=>!]]></charsincompletion> -->
+  </head>
+  <!-- 
+    The <states> tag encloses all syntax states.
+    States are areas of the test that begin and end with an regex like comments or strings,
+    with exception of the default state, that exists anywhere where no other state exists.
+    This tag is required.
+    -->
+  <states>
+    <!-- 
+        The <default> tag specifies what is colored within the default state (see above).
+        It features the following attributes, all optional if not noted otherwise:
+            id
+                Has to be a unique string. Has to be specified.
+            color
+                a html comptible color in three or six letter hexadecimal format.
+                Used for text on bright document background colors.
+            inverted-color
+                a html comptible color in three or six letter hexadecimal format.
+                Used for text if a dark document background color is set.
+            font-weight
+                normal  Normal font-weight (default)
+                bold    Bold text in popup
+            font-style
+                normal  Normal font-weight (default)
+                italic  Bold text in popup
+            usesymbolsfrommode
+                a mode name to use the symbol recognition from
+                when left out the value is inherited from the parent state
+            useautocompletefrommode
+                a mode name to use the autocomplete from - default is this mode
+                when left out the value is inherited from the parent state
+            type
+                a string description of the type. currently only the values
+                "string" and "comment" have meaning and cause bracket matching
+                and syntax highlighting to ignore these areas of text
+                
+        -->
+    <default id="Base" color="#000" inverted-color="#fff">
+      <!-- 
+            The <keywords> tag specifies keyword groups within the current state.
+            It features the following attributes, all optional if not noted otherwise:
+                id
+                    Has to be a unique string. Has to be specified.
+                color
+                    a html comptible color in three or six letter hexadecimal format.
+                    Used for text on bright document background colors.
+                inverted-color
+                    a html comptible color in three or six letter hexadecimal format.
+                    Used for text if a dark document background color is set.
+                font-weight
+                    normal  Normal font-weight (default)
+                    bold    Bold text in popup
+                font-style
+                    normal  Normal font-weight (default)
+                    italic  Bold text in popup
+                casesensitive
+                    yes     This group is case sensitive (default)
+                    no      Ignore case for the group
+                useforautocomplete
+                    yes     Add this group's strings to the autocomplete dictionary (default)
+                    no      Don't add to autocomplete dictionary
+            -->
+      <keywords id="Header" color="#CC0000" inverted-color="#cc66ff" font-weight="bold">
+        <regex>(^#{1,6}\s+[^#]+(?:#{0,99}))\n</regex>
+        <regex>(^[-=]{2,})\n</regex>
+      </keywords>
+      
+      <keywords id="Bold" color="#236e25" inverted-color="#91dc93" font-style="normal" font-weight="bold">
+        <regex>(\*{2}\w+.*\*{2})</regex>
+        <regex>(_{2}\w+.*_{2})</regex>
+      </keywords>
+      
+      <!-- italic is harder than i thought...
+      <keywords id="Italic" color="#236e25" inverted-color="#0000ff"  font-style="italic" font-weight="normal">
+        <regex>(\*{1}\w+.*\*{1})</regex>
+        <regex>(_{1}\w+.*_{1})</regex>
+      </keywords>
+      -->
+      
+            <!-- HTML-like Tags -->
+      <keywords id="Tags" color="#881280" useforautocomplete="no">
+          <regex>(&lt;[^&gt;]*&gt;)</regex>
+      </keywords>
+            
+      <keywords id="Inline Code" color="#939393" inverted-color="#ccc" font-weight="bold">
+        <regex>(`.*`)</regex>
+      </keywords>
+
+      <keywords id="List Items" color="#FFA019" useforautocomplete="no">
+        <regex>^\s*([+\-*]{1}.*)\n</regex>
+        <regex>^\s*([0-9]{1}\..*)\n</regex>
+      </keywords>
+      
+      <state id="Code Block" color="#939393">
+        <begin><regex>^\s{4}[^*\-+]*</regex></begin>
+        <end><regex>(?:^[^\s])</regex></end>
+      </state>
+
+
+      
+    </default>
+  </states>
+</syntax>
