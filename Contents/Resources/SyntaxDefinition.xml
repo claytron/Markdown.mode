@@ -112,13 +112,13 @@
         <regex>(`.*`)</regex>
       </keywords>
 
-      <keywords id="List Items" color="#FFA019" useforautocomplete="no">
+      <keywords id="List Items" color="#6076FF" inverted-color="#FFA019" useforautocomplete="no">
         <regex>^\s*([+\-*]{1}.*)\n</regex>
         <regex>^\s*([0-9]{1}\..*)\n</regex>
       </keywords>
       
       <state id="Code Block" color="#939393">
-        <begin><regex>^\s{4}[^*\-+]*</regex></begin>
+        <begin><regex>^\s{4}.*\n</regex></begin>
         <end><regex>(?:^[^\s])</regex></end>
       </state>
 
